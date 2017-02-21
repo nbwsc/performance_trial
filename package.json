@@ -4,7 +4,7 @@
   "description": "trial some frameworks performance",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node --harmony-async-await index.js"
   },
   "repository": {
     "type": "git",
@@ -22,9 +22,5 @@
   },
   "homepage": "https://github.com/nbwsc/performance_trial#readme",
   "dependencies": {
-    "co": "^4.6.0",
-    "promise_request": "^1.0.0",
-    "request": "^2.79.0",
-    "thunkify": "^2.1.2"
   }
 }

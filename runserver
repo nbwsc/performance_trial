@@ -1,0 +1,22 @@
+#!/bin/bash
+
+echo 'run server'
+
+cd frameworks
+
+# start koa
+node koa/app.js &
+
+# start iris
+./iris/iris &
+
+# start express
+node express/app.js &
+
+# start pure python
+python purepython/main.py & 
+
+# start _django
+python _django/manage.py runserver 7006 &
+
+

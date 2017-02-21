@@ -4,8 +4,11 @@ module.exports = {
     test target in ip:port
     */
     target: [
-        { name: 'egg', url: '127.0.0.1:7001/'},
-
+        { name: 'purepython', url: 'http://127.0.0.1:7001/' },
+        { name: 'koa', url: 'http://127.0.0.1:7004/' },
+        { name: 'iris', url: 'http://127.0.0.1:7003/' },
+        { name: 'express', url: 'http://127.0.0.1:7002/' },
+        { name: 'django', url: 'http://127.0.0.1:7006/' },
     ],
 
 
@@ -21,6 +24,6 @@ module.exports = {
         --timeout     <T>  Socket/request timeout     
     -v, --version          Print version details      
     */
-    wrk_arg: ['-t16','-c100','-d100','-swrk.lua','-T2s']
+    wrk_arg: ['-t16', '-c100', '-d10s', '-swrk.lua', '-T2s']
 
 }

@@ -1,73 +1,35 @@
-const request = require('promise_request');
-const fs = require('fs');
-const exec = require('child_process').exec;
-// const spawn = require('child_process').spawn;
+(async () => {
 
-async function asyncReq() {
-  let option = {
-    method: 'GET',
-    url: 'http://127.0.0.1:7001/',
-    headers: {
-      'cache-control': 'no-cache',
-    },
-  };
-  return await request(option)
-}
+  const fs = require('fs');
+  const config = require('./taskconfig');
+  const unit = require('./lib/unit.js');
+  const execP = require('./lib/execp.js');
 
-async function asyncTest() {
-  let d = new Date();
-  console.log(`starting asyncTest`);
-  for (var i = 0; i < 10000; i++) {
-    await asyncReq();
-  }
-  console.log(`end asyncTest at ${new Date().getTime() - d.getTime()} ms for 10000 request`)
-}
+  const target = config.target;
+  let res = [];
 
-/*
-  use asyncTest
-// */
-// (async () => {
-//   console.log(`startting task ${process.argv[2]}`)
-//   await asyncTest()
-//   console.log(`task end`)
-// })()
-
-
-/*
-use wrk
-*/
-
-
-const execP = function (cmd) {
-  return new Promise(function (resolve, reject) {
-    exec(cmd, function (error, res) {
-      if (error) return reject(error);
-      resolve(res);
+  try {
+    for (var i in target) {
+      console.log(`testing ${target[i].name}`);
+      let r = await execP.exec(`./wrk ${config.wrk_arg.join(' ')} ${target[i].url}`);
+      let a = r.split('\n')
+      console.log(a)
+      res.push({
+        'name': target[i].name,
+        'Latency_Avg': unit.t_us(a[3].split(/ +/)[2]),//make the  time unit us
+        'Req/Sec': unit.metric_units(a[4].split(/ +/)[2]),
+        'requests': unit.metric_units(a[5].split(/ +/)[1]),
+        'Requests/sec': unit.metric_units(a[6].split(/ +/)[1]),
+        'Transfer/sec': unit.metric_units(a[7].split(/ +/)[1].slice(0, -1)),
+      })
+    }
+    res.sort((a, b) => {
+      return b.requests - a.requests;
     })
-  });
-};
-
-const config = require('./taskconfig');
-
-
-let target = config.target;
-
-console.log(wrk_arg)
-    (async () => {
-      let res = [];
-      try {
-        for (var i in target) {
-          console.log(`testing ${target[i].name}`);
-          let r = await execP(`./wrk ${config.wrk_arg.join(' ')} ${target[i].url}`);
-
-          res.push({
-            name: target[i].name,
-            res: r
-          })
-        }
-        fs.writeFile('output.json', JSON.stringify(res))
-        console.log(`${target.length} task finished ;saving`);
-      } catch (e) {
-        console.error(e)
-      }
-    })()
+    fs.writeFileSync('www/output.js', 'var data = ' + JSON.stringify(res));
+    execP.openURL('./www/index.html')
+    console.log(`${target.length} task finished ;saving`);
+  } catch (e) {//catch await error
+    console.error(e)
+  }
+})()
