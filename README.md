@@ -39,7 +39,15 @@ or you can start your own framework
 
     [wrk@github](https://github.com/wg/wrk)
 
+* the `async/await` require node verison 7.xx & with `"runtimeArgs": ["--harmony"]`.
+If your node version dont support this ,you can use babel.
+```
+npm install
 
+npm babelstart 
+#or 
+node babel_starter.js
+```
 ### SCREENSHOT
 ![screenshot](/result_demo.png)
 I think the python result is not accurate.but iris seems really fast.
