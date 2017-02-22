@@ -9,6 +9,7 @@ module.exports = {
         { name: 'iris', url: 'http://127.0.0.1:7003/' },
         { name: 'express', url: 'http://127.0.0.1:7002/' },
         { name: 'django', url: 'http://127.0.0.1:7006/' },
+        { name: 'hapi', url: 'http://127.0.0.1:7005/' },
     ],
 
 

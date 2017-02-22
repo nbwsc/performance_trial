@@ -13,6 +13,9 @@ node koa/app.js &
 # start express
 node express/app.js &
 
+# start hapi
+node hapi/app.js &
+
 # start pure python
 python purepython/main.py & 
 

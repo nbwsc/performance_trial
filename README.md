@@ -14,7 +14,7 @@
 ### FRAMEWORKS
 here contains following frameworks:
 
-    node : express koa
+    node : express koa hapi
 
     python: django
 
