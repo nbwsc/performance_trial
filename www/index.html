@@ -4,7 +4,6 @@
 <head>
     <meta charset="utf-8">
     <title>PERFORMANCE_TRIAL</title>
-    <!-- 引入 echarts.js -->
     <script src="echarts.min.js"></script>
     <script src="output.js"></script>
 </head>
@@ -14,7 +13,7 @@
         <div id="main" style="width: 100%;height:400px;"></div>
     </center>
     <script type="text/javascript">
-        var myChart = echarts.init(document.getElementById('main'));
+        var chart = echarts.init(document.getElementById('main'));
 
         var option = {
             title: {
@@ -22,8 +21,8 @@
             },
             tooltip: {
                 trigger: 'axis',
-                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-                    type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                axisPointer: {            
+                    type: 'shadow'      
                 }
             },
 
@@ -56,9 +55,7 @@
                 data: data.map((e) => { return e["Latency_Avg"] / 1000 })
             }]
         };
-
-        // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option);
+        chart.setOption(option);
     </script>
 </body>
 
